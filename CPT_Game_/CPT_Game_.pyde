@@ -4,6 +4,8 @@
 # variables
 score = 0
 ballSize = 40
+url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
+webImg = loadImage(url, "gif")
 
 
 def setup():
@@ -23,6 +25,13 @@ def draw():
     for i in range(801):
         stroke(lerpColor(beginning, ending, i/600.0))
         line(0, i, width, i)
+
+    # treasure chest
+    global url
+    global webImg
+
+    image(webImg, 30, 400)
+    webImg.resize(100, 50)
 
     # title & score
     textSize(25)
