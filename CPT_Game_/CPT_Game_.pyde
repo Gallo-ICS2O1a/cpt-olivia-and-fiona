@@ -9,13 +9,15 @@ webImg = loadImage(url, "gif")
 
 
 def setup():
-    size(800, 800)
+    size(1000, 600)
 
 
 def draw():
     # globals
     global score
     global ballSize
+    global url
+    global webImg
 
     # background
     background(255)
@@ -25,13 +27,6 @@ def draw():
     for i in range(801):
         stroke(lerpColor(beginning, ending, i/600.0))
         line(0, i, width, i)
-
-    # treasure chest
-    global url
-    global webImg
-
-    image(webImg, 30, 400)
-    webImg.resize(100, 50)
 
     # title & score
     textSize(25)
@@ -59,12 +54,13 @@ def draw():
     point(600, 300)
     point(650, 550)
 
-    # shooting stars
-    stroke(500, 249, 238)
-    # line()
+    # treasure chest
+    image(webImg, 20, 300)
+    webImg.resize(100, 50)
 
     # player
     stroke(75)
     strokeWeight(5)
     noFill()
-    ellipse(150, mouseY, ballSize, ballSize)
+    ellipse(180, mouseY, ballSize, ballSize)
+    
