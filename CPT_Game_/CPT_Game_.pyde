@@ -1,9 +1,16 @@
 # shooting game about a treasure lost in space
 # https://www.youtube.com/user/shiffman
+# link used for treasure chest is too long (Pep 8)
+# however it is required so please ignore it. Thank you!!
 
 # variables
 score = 0
 ballSize = 40
+playerPos = PVector(180, 0)
+missile = PVector(230, 200)
+missileSpeed = PVector(7, 0)
+playerHP = 10
+chestHP = 3
 url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
 webImg = loadImage(url, "gif")
 
@@ -16,6 +23,11 @@ def draw():
     # globals
     global score
     global ballSize
+    global playerPos
+    global missile
+    global missileSpeed
+    global playerHP
+    global chestHP
     global url
     global webImg
 
@@ -31,9 +43,15 @@ def draw():
     # title & score
     textSize(25)
     fill(255)
-    text("Pew Pew!!!", 365, 50)
-    text("score:", 645, 50)
-    text(score, 730, 50)
+    text("Pew Pew!!!", 465, 50)
+    text("score:", 845, 50)
+    text(score, 930, 50)
+
+    # health points
+    text("Player's HP:     / 10", 760, 90)
+    text("Chest's HP:    / 3", 760, 130)
+    text(playerHP, 903, 90)
+    text(chestHP, 903, 130)
 
     # stars
     strokeWeight(2)
@@ -59,8 +77,16 @@ def draw():
     webImg.resize(100, 50)
 
     # player
-    stroke(75)
+    playerPos.y = mouseY
+    stroke(255, 112, 91)
     strokeWeight(5)
     noFill()
-    ellipse(180, mouseY, ballSize, ballSize)
-    
+    ellipse(playerPos.x, playerPos.y, ballSize, ballSize)
+
+    # missiles
+    stroke(255, 81, 54)
+    ellipse(missile.x, missile.y, ballSize, ballSize)
+    missile.add(missileSpeed)
+    if missile.x > width:
+        missile.x = 230
+        missile.y = mouseY
