@@ -5,11 +5,16 @@
 
 # variables
 score = 0
-ballSize = 40
+playerSize = 40
 playerPos = PVector(180, 0)
-missile = PVector(220, 200)
-missileSpeed = PVector(7, 0)
-missileSize = PVector(50, 20)
+
+missilePos = PVector(200, 200)
+missileSpeed = PVector(10, 0)
+
+mobPos = PVector(950, 200)
+mobSize = 50
+mobSpeed = PVector(-5, 0)
+
 playerHP = 10
 chestHP = 3
 url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
@@ -23,11 +28,13 @@ def setup():
 def draw():
     # globals
     global score
-    global ballSize
+    global playerSize
     global playerPos
-    global missile
+    global missilePos
     global missileSpeed
-    global missileSize
+    global mobPos
+    global mobSize
+    global mobSpeed
     global playerHP
     global chestHP
     global url
@@ -83,12 +90,27 @@ def draw():
     stroke(255, 112, 91)
     strokeWeight(5)
     noFill()
-    ellipse(playerPos.x, playerPos.y, ballSize, ballSize)
+    ellipse(playerPos.x, playerPos.y, playerSize, playerSize)
 
     # missiles
     stroke(255, 81, 54)
-    rect(missile.x, missile.y, missileSize.x, missileSize.y)
-    missile.add(missileSpeed)
-    if missile.x > width:
-        missile.x = 230
-        missile.y = mouseY
+    rect(missilePos.x, missilePos.y, 50, 20)
+    missilePos.add(missileSpeed)
+    if missilePos.x > width:
+        missilePos.x = 200
+        missilePos.y = mouseY - 10
+
+    # mobs
+    stroke(146, 255, 48)
+    ellipse(mobPos.x, mobPos.y, mobSize, mobSize)
+    mobPos.add(mobSpeed)
+    if mobPos.x == 0:
+        mobPos.x = 950
+        mobPos.y = random(100, 500)
+
+    # missle detection for mobs if hit
+    distance = PVector.sub(missilePos, mobPos)
+    if distance.mag() <= mobSize:
+        score += 1
+        mobPos.x = 950
+        mobPos.y = random(100, 500)
