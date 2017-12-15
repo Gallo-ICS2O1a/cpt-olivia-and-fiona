@@ -7,8 +7,9 @@
 score = 0
 ballSize = 40
 playerPos = PVector(180, 0)
-missile = PVector(230, 200)
+missile = PVector(220, 200)
 missileSpeed = PVector(7, 0)
+missileSize = PVector(50, 20)
 playerHP = 10
 chestHP = 3
 url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
@@ -26,6 +27,7 @@ def draw():
     global playerPos
     global missile
     global missileSpeed
+    global missileSize
     global playerHP
     global chestHP
     global url
@@ -85,7 +87,7 @@ def draw():
 
     # missiles
     stroke(255, 81, 54)
-    ellipse(missile.x, missile.y, ballSize, ballSize)
+    rect(missile.x, missile.y, missileSize.x, missileSize.y)
     missile.add(missileSpeed)
     if missile.x > width:
         missile.x = 230
