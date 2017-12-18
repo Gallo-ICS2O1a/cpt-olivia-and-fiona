@@ -81,9 +81,12 @@ def draw():
     point(600, 300)
     point(650, 550)
 
-    # treasure chest
-    image(webImg, 20, 300)
-    webImg.resize(100, 50)
+    # treasure chests, use "Using For Loops to Make Multiple Objects"
+    # image(webImg, 20, 300)
+    # webImg.resize(100, 50)
+    for y in range(20, 700, 100):
+        image(webImg, 20, y)
+        webImg.resize(100, 50)
 
     # player
     playerPos.y = mouseY
@@ -111,6 +114,5 @@ def draw():
     # missle detection for mobs if hit
     distance = PVector.sub(missilePos, mobPos)
     if distance.mag() <= mobSize:
-        score += 1
         mobPos.x = 950
         mobPos.y = random(100, 500)
