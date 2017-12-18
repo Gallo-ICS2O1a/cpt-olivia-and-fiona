@@ -1,6 +1,5 @@
 # shooting game about a treasure lost in space
-# https://www.youtube.com/user/shiffman
-# link used for treasure chest is too long (Pep 8)
+# link used for treasure chest is too long (according to Pep 8)
 # however it is required so please ignore it. Thank you!!
 
 # variables
@@ -8,7 +7,7 @@ score = 0
 playerSize = 40
 playerPos = PVector(180, 0)
 
-missilePos = PVector(200, 200)
+missilePos = PVector(200, 100)
 missileSpeed = PVector(10, 0)
 
 mobPos = PVector(950, 200)
@@ -81,9 +80,7 @@ def draw():
     point(600, 300)
     point(650, 550)
 
-    # treasure chests, use "Using For Loops to Make Multiple Objects"
-    # image(webImg, 20, 300)
-    # webImg.resize(100, 50)
+    # treasure chests
     for y in range(20, 700, 100):
         image(webImg, 20, y)
         webImg.resize(100, 50)
@@ -116,3 +113,34 @@ def draw():
     if distance.mag() <= mobSize:
         mobPos.x = 950
         mobPos.y = random(100, 500)
+        missilePos.x = 200
+        score += 1
+    if score >= 10:
+        textSize(40)
+        text("STAGE CLEAR~! :D", 350, 300)
+        score = 10
+        chestHP = 3
+        playerHP = 10
+
+    # mob detection for player if hit
+    distanceMobPlayer = PVector.sub(mobPos, playerPos)
+    if distanceMobPlayer.mag() <= playerSize:
+        mobPos.x = 950
+        mobPos.y = random(100, 500)
+        playerHP -= 1
+    if playerHP <= 0:
+        score = 0
+        playerHP = 0
+        chestHP = 3
+        textSize(40)
+        text("GAME OVER~ :C", 350, 300)
+
+    # mob detection for treasure chest if hit
+    if mobPos.x == 100:
+        chestHP -= 1
+    if chestHP <= 0:
+        textSize(40)
+        text("GAME OVER~ :C", 350, 300)
+        chestHP = 0
+        playerHP = 10
+        score = 0
