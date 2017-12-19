@@ -48,12 +48,14 @@ def draw():
         stroke(lerpColor(beginning, ending, i/600.0))
         line(0, i, width, i)
 
-    # title & score
+    # title, score & tip
     textSize(25)
     fill(255)
     text("Pew Pew!!!", 465, 50)
     text("score:", 845, 50)
     text(score, 930, 50)
+    textSize(20)
+    text("tip! press down your mouse to activate [game help]", 200, 75)
 
     # health points
     text("Player's HP:     / 10", 760, 90)
@@ -128,6 +130,7 @@ def draw():
         mobPos.x = 950
         mobPos.y = random(100, 500)
         playerHP -= 1
+
     if playerHP <= 0:
         score = 0
         playerHP = 0
@@ -144,3 +147,21 @@ def draw():
         chestHP = 0
         playerHP = 10
         score = 0
+
+    # game help
+    if mousePressed is True:
+        mobSpeed = PVector(0, 0)
+        missileSpeed = PVector(0, 0)
+        textSize(20)
+        fill(255)
+        text("""Game Help:
+1. You are the pink ellipse, your missiles are the red rectangles and the
+enemy is the green ellipse
+2. You shoot automatic missiles, move your mouse up or down to direct the missiles
+3. Use the missiles to defeat the enemy mobs and protect the treasure chest
+4. There are 3 stages in total, defeat the mob wave and a mini boss to continue
+5. If you or the treasure chest gets hit, HP will go down. If HP hits 0, its game over!
+6. After clearing 3 stages, you reached the spaceship and cleared the game~""", 130, 200)
+    else:
+        mobSpeed = PVector(-5, 0)
+        missileSpeed = PVector(10, 0)
