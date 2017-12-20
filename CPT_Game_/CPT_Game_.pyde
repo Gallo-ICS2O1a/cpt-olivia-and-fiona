@@ -16,8 +16,11 @@ mobSpeed = PVector(-5, 0)
 
 playerHP = 10
 chestHP = 3
+
 url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
 webImg = loadImage(url, "gif")
+url2 = "https://i.imgur.com/tcSd9mZ.png"
+webImg2 = loadImage(url2, "png")
 
 
 def setup():
@@ -38,6 +41,8 @@ def draw():
     global chestHP
     global url
     global webImg
+    global url2
+    global webImg2
 
     # background
     background(255)
@@ -49,9 +54,7 @@ def draw():
         line(0, i, width, i)
 
     # title, score & tip
-    font = loadFont("Courier10PitchBT-Roman-48.vlw")
     textSize(25)
-    textFont(font)
     fill(255)
     text("Pew Pew!!!", 465, 50)
     text("score:", 845, 50)
@@ -62,8 +65,8 @@ def draw():
     # health points
     text("Player's HP:     / 10", 760, 90)
     text("Chest's HP:    / 3", 760, 130)
-    text(playerHP, 903, 90)
-    text(chestHP, 903, 130)
+    text(playerHP, 874, 90)
+    text(chestHP, 877, 130)
 
     # stars
     strokeWeight(2)
@@ -119,29 +122,13 @@ def draw():
         mobPos.y = random(100, 500)
         missilePos.x = 200
         score += 1
-    
-    
-    if score == 10:
-        textSize(40)
-        textFont(font)
-        stageClear = "STAGE 1 CLEAR~! :D"
-        text(stageClear, 350, 300)
-        #score = 10
+    if score >= 10:
+        textSize(30)
+        text("DANGER, DANGER! MINI BOSS IS APPEARING!", 200, 300)
+        score = 10
         chestHP = 3
         playerHP = 10
-    if score == 25:
-        textSize(40)
-        stageClear = "STAGE 2 CLEAR~! >W<)9"
-        text(stageClear, 350, 300)
-        chestHP = 3
-        playerHP = 1 
-    if score == 40:
-        textSize(40)
-        stageClear = """
-        STAGE 3 CLEAR~!
-        BOSS INCOMING '^'...
-        """
-        text(stageClear, 350, 300)
+
     # mob detection for player if hit
     distanceMobPlayer = PVector.sub(mobPos, playerPos)
     if distanceMobPlayer.mag() <= playerSize:
@@ -168,18 +155,25 @@ def draw():
 
     # game help
     if mousePressed is True:
+        webImg2.resize(320, 482)
+        image(webImg2, 0, 120)
         mobSpeed = PVector(0, 0)
         missileSpeed = PVector(0, 0)
         textSize(20)
         fill(255)
         text("""Game Help:
-1. You are the pink ellipse, your missiles are the red rectangles and the
-enemy is the green ellipse
-2. You shoot automatic missiles, move your mouse up or down to direct the missiles
-3. Use the missiles to defeat the enemy mobs and protect the treasure chest
-4. There are 3 stages in total, defeat the mob wave and a mini boss to continue
-5. If you or the treasure chest gets hit, HP will go down. If HP hits 0, its game over!
-6. After clearing 3 stages, you reached the spaceship and cleared the game~""", 130, 200)
+1. You are the pink ellipse, your missiles are the red rectangles and
+the enemy is the green ellipse
+2. You shoot automatic missiles, move your mouse up or down to
+direct the missiles
+3. Defeat the enemy mobs and protect the treasure chests
+4. There are 3 stages in total:
+stage 1 and 2 - defeat the mob waves and a mini boss to continue
+stage 3 - defeat the mob waves and the final boss to continue
+5. If you or the treasure chest gets hit, HP will go down. If HP hits 0,
+its game over!
+6. After clearing 3 stages, you reached the spaceship and cleared the
+game~""", 300, 200)
     else:
         mobSpeed = PVector(-5, 0)
         missileSpeed = PVector(10, 0)
