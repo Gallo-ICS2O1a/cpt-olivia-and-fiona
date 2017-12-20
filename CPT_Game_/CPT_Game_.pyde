@@ -49,7 +49,9 @@ def draw():
         line(0, i, width, i)
 
     # title, score & tip
+    font = loadFont("Courier10PitchBT-Roman-48.vlw")
     textSize(25)
+    textFont(font)
     fill(255)
     text("Pew Pew!!!", 465, 50)
     text("score:", 845, 50)
@@ -117,13 +119,29 @@ def draw():
         mobPos.y = random(100, 500)
         missilePos.x = 200
         score += 1
-    if score >= 10:
+    
+    
+    if score == 10:
         textSize(40)
-        text("STAGE CLEAR~! :D", 350, 300)
-        score = 10
+        textFont(font)
+        stageClear = "STAGE 1 CLEAR~! :D"
+        text(stageClear, 350, 300)
+        #score = 10
         chestHP = 3
         playerHP = 10
-
+    if score == 25:
+        textSize(40)
+        stageClear = "STAGE 2 CLEAR~! >W<)9"
+        text(stageClear, 350, 300)
+        chestHP = 3
+        playerHP = 1 
+    if score == 40:
+        textSize(40)
+        stageClear = """
+        STAGE 3 CLEAR~!
+        BOSS INCOMING '^'...
+        """
+        text(stageClear, 350, 300)
     # mob detection for player if hit
     distanceMobPlayer = PVector.sub(mobPos, playerPos)
     if distanceMobPlayer.mag() <= playerSize:
