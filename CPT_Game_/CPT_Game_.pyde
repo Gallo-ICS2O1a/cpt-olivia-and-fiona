@@ -14,8 +14,12 @@ mobPos = PVector(950, 200)
 mobSize = 50
 mobSpeed = PVector(-5, 0)
 
+miniBossPosA = PVector(800, 350)
+miniBossSize = 300
+
 playerHP = 10
 chestHP = 3
+miniBossHP = 15
 
 url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
 webImg = loadImage(url, "gif")
@@ -37,8 +41,11 @@ def draw():
     global mobPos
     global mobSize
     global mobSpeed
+    global miniBossPosA
+    global miniBossSizeA
     global playerHP
     global chestHP
+    global miniBossHP
     global url
     global webImg
     global url2
@@ -50,7 +57,7 @@ def draw():
     ending = color(45, 135, 255)
 
     for i in range(801):
-        stroke(lerpColor(beginning, ending, i/600.0))
+        stroke(lerpColor(beginning, ending, i / 600.0))
         line(0, i, width, i)
 
     # title, score & tip
@@ -60,7 +67,7 @@ def draw():
     text("score:", 845, 50)
     text(score, 930, 50)
     textSize(20)
-    text("tip! press down your mouse to activate [game help]", 200, 75)
+    text("tip! hold down your mouse to activate [game help]", 200, 75)
 
     # health points
     text("Player's HP:     / 10", 760, 90)
@@ -89,8 +96,8 @@ def draw():
 
     # treasure chests
     for y in range(20, 700, 100):
-        image(webImg, 20, y)
         webImg.resize(100, 50)
+        image(webImg, 20, y)
 
     # player
     playerPos.y = mouseY
@@ -122,12 +129,19 @@ def draw():
         mobPos.y = random(100, 500)
         missilePos.x = 200
         score += 1
-    if score >= 10:
+    if score >= 1:  # >= 10
         textSize(30)
-        text("DANGER, DANGER! MINI BOSS IS APPEARING!", 200, 300)
-        score = 10
+        text("DANGER, DANGER! MINI BOSS HAS APPEARED!", 200, 170)
         chestHP = 3
         playerHP = 10
+
+        # mini boss
+        stroke(222, 0, 62)
+        ellipse(miniBossPosA.x, miniBossPosA.y, miniBossSize, miniBossSize)
+        mobPos = PVector(1100, 400)
+        mobSpeed = PVector(0, 0)
+        text("Mini Boss's HP:     / 15", 620, 550)
+        text(miniBossHP, 845, 550)
 
     # mob detection for player if hit
     distanceMobPlayer = PVector.sub(mobPos, playerPos)
@@ -155,6 +169,11 @@ def draw():
 
     # game help
     if mousePressed is True:
+        beginning = color(1, 5, 32)
+        ending = color(45, 135, 255)
+        for i in range(801):
+            stroke(lerpColor(beginning, ending, i / 600.0))
+            line(0, i, width, i)
         webImg2.resize(320, 482)
         image(webImg2, 0, 120)
         mobSpeed = PVector(0, 0)
