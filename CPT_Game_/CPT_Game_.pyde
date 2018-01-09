@@ -1,5 +1,5 @@
-# shooting game about a treasure lost in space
-# link used for treasure chest is too long (according to Pep 8)
+# shooting game about treasure lost in space
+# link used for treasure chest and [how to play] for first mini boss is too long (according to Pep 8)
 # however it is required so please ignore it. Thank you!!
 
 # variables
@@ -15,11 +15,14 @@ mobSize = 50
 mobSpeed = PVector(-5, 0)
 
 miniBossPosA = PVector(800, 350)
-miniBossSize = 300
+miniBossSizeA = 100
+miniBossSpeedA = PVector(7, 7)
+missilePosMB = PVector(700, 100)
+missileSpeedMB = PVector(10, 0)
 
 playerHP = 10
 chestHP = 3
-miniBossHP = 15
+miniBossHP = 10
 
 url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
 webImg = loadImage(url, "gif")
@@ -43,6 +46,9 @@ def draw():
     global mobSpeed
     global miniBossPosA
     global miniBossSizeA
+    global miniBossSpeedA
+    global missilePosMB
+    global missileSpeedMB
     global playerHP
     global chestHP
     global miniBossHP
@@ -132,16 +138,42 @@ def draw():
     if score >= 1:  # >= 10
         textSize(30)
         text("DANGER, DANGER! MINI BOSS HAS APPEARED!", 200, 170)
-        chestHP = 3
-        playerHP = 10
 
         # mini boss
         stroke(222, 0, 62)
-        ellipse(miniBossPosA.x, miniBossPosA.y, miniBossSize, miniBossSize)
+        ellipse(miniBossPosA.x, miniBossPosA.y, miniBossSizeA, miniBossSizeA)
         mobPos = PVector(1100, 400)
         mobSpeed = PVector(0, 0)
-        text("Mini Boss's HP:     / 15", 620, 550)
+        text("Mini Boss's HP:     / 10", 620, 550)
         text(miniBossHP, 845, 550)
+        textSize(20)
+        text("dodge the mini boss's missiles and bump into it to deplete hp! (chests are invincible)", 150, 210)
+
+        # player adjustments
+        playerPos.x = mouseX
+
+        # mini boss bouncing off walls
+        miniBossPosA.add(miniBossSpeedA)
+        if miniBossPosA.x > width:
+            miniBossPosA.x = width
+            miniBossSpeedA.x = -miniBossSpeedA.x
+        elif miniBossPosA.x < 170:
+            miniBossPosA.x = 170
+            miniBossSpeedA.x = -miniBossSpeedA.x
+
+        if miniBossPosA.y > height:
+            miniBossPosA.y = height
+            miniBossSpeedA.y = -miniBossSpeedA.y
+        elif miniBossPosA.y < 0:
+            miniBossPosA.y = 0
+            miniBossSpeedA.y = -miniBossSpeedA.y\
+
+        # mini boss missiles
+
+        # disable player's missiles
+        missilePos.x = 1100
+        missilePos.y = 800
+        missileSpeed = PVector(0, 0)
 
     # mob detection for player if hit
     distanceMobPlayer = PVector.sub(mobPos, playerPos)
