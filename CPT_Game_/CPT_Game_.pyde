@@ -1,6 +1,5 @@
 # shooting game about treasure lost in space
-# link used for treasure chest and [how to play] for first mini boss is too long (according to Pep 8)
-# however it is required so please ignore it. Thank you!!
+# [mission start]
 
 # variables
 score = 0
@@ -17,17 +16,19 @@ mobSpeed = PVector(-5, 0)
 miniBossPosA = PVector(800, 350)
 miniBossSizeA = 100
 miniBossSpeedA = PVector(7, 7)
-missilePosMB = PVector(700, 100)
-missileSpeedMB = PVector(10, 0)
+asteroidPos = PVector(700, 100)
+asteroidSpeed = PVector(-10, 0)
 
 playerHP = 10
 chestHP = 3
 miniBossHP = 10
 
-url = "http://clipartix.com/wp-content/uploads/2016/07/Treasure-chest-clipart-clipart.gif"
+url = "https://i.imgur.com/lHwIfhP.gif"
 webImg = loadImage(url, "gif")
 url2 = "https://i.imgur.com/tcSd9mZ.png"
 webImg2 = loadImage(url2, "png")
+url3 = "https://i.imgur.com/lgju8SY.png"
+webImg3 = loadImage(url3, "png")
 
 
 def setup():
@@ -47,8 +48,8 @@ def draw():
     global miniBossPosA
     global miniBossSizeA
     global miniBossSpeedA
-    global missilePosMB
-    global missileSpeedMB
+    global asteroidPos
+    global asteroidSpeed
     global playerHP
     global chestHP
     global miniBossHP
@@ -135,7 +136,7 @@ def draw():
         mobPos.y = random(100, 500)
         missilePos.x = 200
         score += 1
-    if score >= 1:  # >= 10
+    if score >= 1:
         textSize(30)
         text("DANGER, DANGER! MINI BOSS HAS APPEARED!", 200, 170)
 
@@ -147,7 +148,8 @@ def draw():
         text("Mini Boss's HP:     / 10", 620, 550)
         text(miniBossHP, 845, 550)
         textSize(20)
-        text("dodge the mini boss's missiles and bump into it to deplete hp! (chests are invincible)", 150, 210)
+        text("dodge asteroids & bump into mini boss to deplete hp", 150, 210)
+        text("(chests are invincible)", 675, 210)
 
         # player adjustments
         playerPos.x = mouseX
@@ -166,9 +168,15 @@ def draw():
             miniBossSpeedA.y = -miniBossSpeedA.y
         elif miniBossPosA.y < 0:
             miniBossPosA.y = 0
-            miniBossSpeedA.y = -miniBossSpeedA.y\
+            miniBossSpeedA.y = -miniBossSpeedA.y
 
-        # mini boss missiles
+        # asteroids
+        webImg3.resize(60, 60)
+        image(webImg3, asteroidPos.x, asteroidPos.y)
+        asteroidPos.add(asteroidSpeed)
+        if asteroidPos.x < 0:
+            asteroidPos.x = 1000
+            asteroidPos.y = random(30, 570)
 
         # disable player's missiles
         missilePos.x = 1100
