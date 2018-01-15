@@ -33,8 +33,8 @@ miniBossHP2 = 15
 
 urlChest = "https://i.imgur.com/lHwIfhP.gif"
 imgChest = loadImage(urlChest, "gif")
-urlGirl = "https://i.imgur.com/tcSd9mZ.png"
-imgGirl = loadImage(urlGirl, "png")
+# urlGirl = "https://i.imgur.com/SxPXFBX.png"
+# imgGirl = loadImage(urlGirl, "png")
 urlAsteroid = "https://i.imgur.com/lgju8SY.png"
 imgAsteroid = loadImage(urlAsteroid, "png")
 
@@ -345,3 +345,4 @@ game~""", 300, 180)
     else:
         mobSpeed = PVector(-5, 0)
         missileSpeed = PVector(10, 0)
+
