@@ -33,8 +33,8 @@ miniBossHP2 = 15
 
 urlChest = "https://i.imgur.com/lHwIfhP.gif"
 imgChest = loadImage(urlChest, "gif")
-# urlGirl = "https://i.imgur.com/SxPXFBX.png"
-# imgGirl = loadImage(urlGirl, "png")
+urlGirl = "https://i.imgur.com/SxPXFBX.png"
+imgGirl = loadImage(urlGirl, "png")
 urlAsteroid = "https://i.imgur.com/lgju8SY.png"
 imgAsteroid = loadImage(urlAsteroid, "png")
 
