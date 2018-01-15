@@ -155,7 +155,7 @@ def draw():
         score += 1
 
     # Stage One
-    if score >= 1:
+    if score >= 10:
         textSize(20)
         text("""DANGER, DANGER! MINI BOSS NO. 1 HAS APPEARED!
         The mini boss will follow you so be careful!
