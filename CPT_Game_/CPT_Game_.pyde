@@ -1,5 +1,7 @@
 # shooting game about treasure lost in space
 # [mission start]
+# game help, planet, spaceship & ending images digitally drawn by Fiona
+# please enjoy our game!!
 
 # variables
 score = 0
@@ -17,8 +19,8 @@ miniBossPosA = PVector(800, 350)
 miniBossSpeedA = PVector(0, 0)
 miniBossSizeA = 100
 planetPos = PVector(200, 400)
-planetSpeed = PVector(10, 0)
 planetSize = 80
+planetSpeed = PVector(10, 0)
 
 miniBossPosB = PVector(800, 350)
 miniBossSpeedB = PVector(3, 3)
@@ -33,10 +35,12 @@ miniBossHP2 = 15
 
 urlChest = "https://i.imgur.com/lHwIfhP.gif"
 imgChest = loadImage(urlChest, "gif")
-# urlGirl = "https://i.imgur.com/SxPXFBX.png"
-# imgGirl = loadImage(urlGirl, "png")
+urlGirl = "https://i.imgur.com/SxPXFBX.png"
+imgGirl = loadImage(urlGirl, "png")
 urlAsteroid = "https://i.imgur.com/lgju8SY.png"
 imgAsteroid = loadImage(urlAsteroid, "png")
+urlPlanet = "https://i.imgur.com/PwoqdLl.png"
+imgPlanet = loadImage(urlPlanet, "png")
 
 
 def setup():
@@ -74,6 +78,8 @@ def draw():
     global imgGirl
     global urlAsteroid
     global imgAsteroid
+    global urlPlanet
+    global imgPlanet
 
     # background
     background(255)
@@ -92,6 +98,8 @@ def draw():
     text(score, 930, 50)
     textSize(20)
     text("tip! hold down your mouse to activate [game help]", 200, 75)
+    text("at each respective stage:", 200, 100)
+    text("hold down [1], [2] or [3] for help", 200, 125)
 
     # health points
     text("Player's HP:     / 10", 760, 90)
@@ -155,13 +163,15 @@ def draw():
         score += 1
 
     # Stage One
-    if score >= 1:
-        textSize(20)
-        text("""DANGER, DANGER! MINI BOSS NO. 1 HAS APPEARED!
-        The mini boss will follow you so be careful!
-        If the mini boss touches you, you lose HP
-        Crash the mini boss into the planet to defeat it
-        (Chests are invincible!)""", 200, 100)
+    if score >= 10:
+        if keyPressed and (key == "1"):
+            text("""
+            The mini boss will follow you so be careful!
+            If the mini boss touches you, your HP will deplete
+            Crash the mini boss into the planet to defeat it
+            (Chests are invincible!)
+            """, 200, 160)
+            miniBossPosA = PVector(1000, 600)
 
         # player adjustments
         playerPos = PVector(mouseX, mouseY)
@@ -185,8 +195,9 @@ def draw():
         miniBossPosA.add(miniBossSpeedA * 3)
 
         # planet
-        fill(128, 128, 128)
-        noStroke()
+        fill(100, 167, 150)
+        stroke(73, 141, 158)
+        strokeWeight(3)
         ellipse(planetPos.x, planetPos.y, planetSize, planetSize)
 
         # collision detection for planet and mini boss
@@ -345,4 +356,3 @@ game~""", 300, 180)
     else:
         mobSpeed = PVector(-5, 0)
         missileSpeed = PVector(10, 0)
-
