@@ -1,36 +1,45 @@
 # shooting game about treasure lost in space
 # [mission start]
-# game help, planet, spaceship & ending images digitally drawn by Fiona
+# game help, spaceship & ending images digitally drawn by Fiona
 # please enjoy our game!!
+
 # variables
-score = 0
 playerSize = 40
 playerPos = PVector(180, 0)
 missilePos = PVector(200, 100)
 missileSpeed = PVector(10, 0)
+
 mobPos = PVector(950, 200)
 mobSize = 50
 mobSpeed = PVector(-5, 0)
 miniBossPosA = PVector(1000, 600)
 miniBossSpeedA = PVector(0, 0)
 miniBossSizeA = 100
+
 planetPos = PVector(200, 400)
 planetSize = 80
 planetSpeed = PVector(10, 0)
+
 miniBossPosB = PVector(800, 350)
 miniBossSpeedB = PVector(3, 3)
 miniBossSizeB = 120
 asteroidPos = PVector(700, 100)
 asteroidSpeed = PVector(-10, 0)
+
+score = 0
 playerHP = 10
 chestHP = 3
 miniBossHP1 = 10
 miniBossHP2 = 15
+
 screen = "menu"
+
 urlChest = "https://i.imgur.com/lHwIfhP.gif"
 imgChest = loadImage(urlChest, "gif")
 urlGirl = "https://i.imgur.com/SxPXFBX.png"
 imgGirl = loadImage(urlGirl, "png")
+urlGirlBlue = "https://i.imgur.com/kEvWRTm.png"
+imgGirlBlue = loadImage(urlGirlBlue, "png")
 urlAsteroid = "https://i.imgur.com/lgju8SY.png"
 imgAsteroid = loadImage(urlAsteroid, "png")
 urlPlanet = "https://i.imgur.com/PwoqdLl.png"
@@ -66,15 +75,13 @@ def draw():
     global chestHP
     global miniBossHP1
     global miniBossHP2
-    global urlChest
     global imgChest
-    global urlGirl
     global imgGirl
-    global urlAsteroid
+    global imgGirlBlue
     global imgAsteroid
-    global urlPlanet
     global imgPlanet
     global screen
+    
     # start menu
     if screen == "menu":
         if keyPressed:
@@ -89,10 +96,10 @@ def draw():
         fill(255)
         textSize(30)
         text("""
-            Pew Pew!
-            Please press "s" to start the game!~""", 100, 200)
-# --------------------------- STAGE 0 -----------------
-    # Stage 0
+            Pew Pew!!
+            Press "s" to start the game~!""", 100, 200)
+
+    # Stage 0 (Normal Stage)
     elif screen == "game start":
         background(255)
         beginning = color(1, 5, 32)
@@ -100,10 +107,11 @@ def draw():
         for i in range(801):
             stroke(lerpColor(beginning, ending, i / 600.0))
             line(0, i, width, i)
+
         # title, score & tip
         textSize(25)
         fill(255)
-        text("Pew Pew!!!", 465, 50)
+        text("Pew Pew!!", 465, 50)
         text("score:", 845, 50)
         text(score, 930, 50)
         textSize(20)
@@ -115,6 +123,7 @@ def draw():
         text("Chest's HP:    / 3", 760, 130)
         text(playerHP, 874, 90)
         text(chestHP, 877, 130)
+
         # stars
         strokeWeight(2)
         stroke(255)
@@ -133,16 +142,19 @@ def draw():
         point(365, 320)
         point(600, 300)
         point(650, 550)
+
         # treasure chests
         for y in range(20, 700, 100):
             imgChest.resize(100, 50)
             image(imgChest, 20, y)
+
         # player
         playerPos.y = mouseY
         stroke(255, 112, 91)
         strokeWeight(5)
         noFill()
         ellipse(playerPos.x, playerPos.y, playerSize, playerSize)
+
         # missiles
         stroke(255, 81, 54)
         rect(missilePos.x, missilePos.y, 50, 20)
@@ -150,6 +162,30 @@ def draw():
         if missilePos.x > width:
             missilePos.x = 200
             missilePos.y = mouseY - 10
+
+        # mob detection for player if hit
+        distanceMobPlayer = PVector.sub(mobPos, playerPos)
+        if distanceMobPlayer.mag() <= playerSize/2:
+            mobPos.x = 950
+            mobPos.y = random(100, 500)
+            playerHP -= 1
+        if playerHP <= 0:
+            score = 0
+            playerHP = 0
+            chestHP = 0
+            textSize(40)
+            text("GAME OVER...", 350, 300)
+
+        # mob detection for treasure chest if hit
+        if mobPos.x == 100:
+            chestHP -= 1
+        if chestHP <= 0:
+            textSize(40)
+            text("GAME OVER~ :C", 350, 300)
+            chestHP = 0
+            playerHP = 0
+            score = 0
+
         # mobs
         stroke(146, 255, 48)
         ellipse(mobPos.x, mobPos.y, mobSize, mobSize)
@@ -157,6 +193,7 @@ def draw():
         if mobPos.x == 0:
             mobPos.x = 950
             mobPos.y = random(100, 500)
+
         # missle detection for mobs if hit
         distance = PVector.sub(missilePos, mobPos)
         if distance.mag() <= mobSize/2:
@@ -164,6 +201,7 @@ def draw():
             mobPos.y = random(100, 500)
             missilePos.x = 200
             score += 1
+
         # game help
         if mousePressed is True:
             beginning = color(1, 5, 32)
@@ -200,7 +238,7 @@ def draw():
             screen = "stage one"
         elif score == 25:
             screen = "stage two"
-# -----------------------STAGE ONE -------------------------
+
     # Stage One
     if screen == "stage one":
         if keyPressed and (key == "1"):
@@ -211,6 +249,7 @@ def draw():
             (Chests are invincible!)
             """, 200, 160)
             miniBossPosA = PVector(1000, 600)
+
         # background
         background(255)
         beginning = color(1, 5, 32)
@@ -218,39 +257,24 @@ def draw():
         for i in range(801):
             stroke(lerpColor(beginning, ending, i / 600.0))
             line(0, i, width, i)
+
         # title, score & tip
         textSize(25)
         fill(255)
-        text("Pew Pew!!!", 465, 50)
+        text("Pew Pew!!", 465, 50)
         text("score:", 845, 50)
         text(score, 930, 50)
         textSize(20)
         text("tip! hold down your mouse to activate [game help]", 200, 75)
         text("at each respective stage:", 200, 100)
         text("hold down [1], [2] or [3] for help", 200, 125)
+
         # health points
         text("Player's HP:     / 10", 760, 90)
         text("Chest's HP:    / 3", 760, 130)
         text(playerHP, 874, 90)
         text(chestHP, 877, 130)
-        # stars
-        strokeWeight(2)
-        stroke(255)
-        point(500, 400)
-        point(300, 200)
-        point(100, 300)
-        point(600, 100)
-        point(700, 250)
-        point(430, 230)
-        point(150, 60)
-        point(360, 470)
-        point(50, 140)
-        point(230, 350)
-        point(750, 430)
-        point(150, 450)
-        point(365, 320)
-        point(600, 300)
-        point(650, 550)
+
         # treasure chests
         for y in range(20, 700, 100):
             imgChest.resize(100, 50)
@@ -262,32 +286,38 @@ def draw():
         strokeWeight(5)
         noFill()
         ellipse(playerPos.x, playerPos.y, playerSize, playerSize)
+
         # disable player's missiles and mobs
         missilePos = PVector(1100, 800)
         missileSpeed = PVector(0, 0)
         mobPos = PVector(1100, 400)
         mobSpeed = PVector(0, 0)
+
         # mini boss no. 1
         text("Mini Boss's HP:     / 10", 760, 500)
         text(miniBossHP1, 910, 500)
         stroke(222, 0, 62)
         ellipse(miniBossPosA.x, miniBossPosA.y, miniBossSizeA, miniBossSizeA)
+
         # mini boss follows player
         distanceFollow = PVector.sub(miniBossPosA, playerPos)
         distanceFollow.mult(-1)
         miniBossSpeedA = distanceFollow.normalize()
         miniBossPosA.add(miniBossSpeedA * 3)
+
         # planet
         fill(100, 167, 150)
         stroke(73, 141, 158)
         strokeWeight(3)
         ellipse(planetPos.x, planetPos.y, planetSize, planetSize)
+
         # collision detection for planet and mini boss
         distancePlanetMB = PVector.sub(planetPos, miniBossPosA)
         if distancePlanetMB.mag() <= miniBossSizeA/2:
             miniBossHP1 -= 1
             planetPos.x = random(0, 1000)
             planetPos.y = random(0, 600)
+
         # mini boss detection if player attacks successfully
         distancePlayerMB1 = PVector.sub(playerPos, miniBossPosA)
         if distancePlayerMB1.mag() <= playerSize/2:
@@ -300,7 +330,7 @@ def draw():
             background(255, 101, 81)
             textSize(30)
             text("GAME OVER...", 600, 300)
-# ------------------------- STAGE ----------------------
+
     # Stage Two
     if screen == "stage two":
         textSize(30)
@@ -313,8 +343,10 @@ def draw():
         textSize(20)
         text("dodge asteroids & bump into mini boss to deplete hp", 150, 210)
         text("(chests are invincible)", 675, 210)
+
         # player adjustments
         playerPos.x = mouseX
+
         # asteroids
         imgAsteroid.resize(60, 60)
         image(imgAsteroid, asteroidPos.x, asteroidPos.y)
@@ -322,11 +354,13 @@ def draw():
         if asteroidPos.x < 0:
             asteroidPos.x = 1000
             asteroidPos.y = random(30, 570)
+
         # disable player's missiles and mobs
         missilePos.x = PVector(1100, 800)
         missileSpeed = PVector(0, 0)
         mobPos = PVector(1100, 400)
         mobSpeed = PVector(0, 0)
+
         # asteroid detection for player if hit
         distancePlayerAsteroid = PVector.sub(asteroidPos, playerPos)
         if distancePlayerAsteroid.mag() <= playerSize:
@@ -339,6 +373,7 @@ def draw():
             chestHP = 0
             textSize(40)
             text("GAME OVER~ :C", 350, 300)
+
         # mini boss detection if player attacks successfully
         distancePlayerMB2 = PVector.sub(miniBossPosB, playerPos)
         if distancePlayerMB2.mag() <= miniBossSizeB/2:
@@ -347,6 +382,7 @@ def draw():
             miniBossPosB.y = random(0, 600)
         elif miniBossHP2 <= 0:
             miniBossHP2 = 0
+
         # range detection and repel
         radius = miniBossSizeB/2
         distanceRepel = PVector.sub(miniBossPosB, playerPos)
@@ -354,6 +390,7 @@ def draw():
             direction = distanceRepel.heading()
             repel = miniBossPosB.fromAngle(direction)
             miniBossSpeedB.add(repel)
+
         # mini boss bouncing off walls
         miniBossPosB.add(miniBossSpeedB)
         if miniBossPosB.x > width:
@@ -368,24 +405,3 @@ def draw():
         elif miniBossPosB.y < 0:
             miniBossPosB.y = 0
             miniBossSpeedB.y = -miniBossSpeedB.y
-        # mob detection for player if hit
-        distanceMobPlayer = PVector.sub(mobPos, playerPos)
-        if distanceMobPlayer.mag() <= playerSize/2:
-            mobPos.x = 950
-            mobPos.y = random(100, 500)
-            playerHP -= 1
-        if playerHP <= 0:
-            score = 0
-            playerHP = 0
-            chestHP = 0
-            textSize(40)
-            text("GAME OVER~ :C", 350, 300)
-        # mob detection for treasure chest if hit
-        if mobPos.x == 100:
-            chestHP -= 1
-        if chestHP <= 0:
-            textSize(40)
-            text("GAME OVER~ :C", 350, 300)
-            chestHP = 0
-            playerHP = 0
-            score = 0
