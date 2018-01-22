@@ -1,6 +1,6 @@
 # shooting game about treasure lost in space
 # [mission start]
-# game help, spaceship & ending images digitally drawn by Fiona
+# game help image, spaceship & ending images (except chest) digitally drawn by Fiona
 # please enjoy our game!!
 
 # variables
