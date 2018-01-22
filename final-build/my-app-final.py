@@ -220,7 +220,7 @@ def draw():
     direct the missiles
     3. Defeat the enemy mobs and protect the treasure chests
     4. The mini boss will arrive once you hit a score of 10
-    The boss will arive once you hit a score of 25
+    The boss will arrive once you hit a score of 25
     5. If you or the treasure chest gets hit, HP will go down. If HP hits 0,
     its game over!
     6. After clearing 3 stages, you reached the spaceship and cleared the
