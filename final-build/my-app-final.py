@@ -441,8 +441,7 @@ def draw():
         distancePlayerBoss = PVector.sub(bossPos, playerPos)
         if distancePlayerBoss.mag() <= bossSize/2:
             bossHP -= 1
-            bossPos.x = random(0, 1000)
-            bossPos.y = random(0, 600)
+            bossPos.x = random(0, 1000)            bossPos.y = random(0, 600)
         elif bossHP <= 0:
             bossHP = 0
             screen = "end"
